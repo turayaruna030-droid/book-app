@@ -1,3 +1,63 @@
+#book-content {
+  width: 100%;
+  min-height: 160px;
+  margin-top: 15px;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font: inherit;
+  resize: vertical;
+}
+
+.book-actions {
+  flex-wrap: wrap;
+}
+
+.inside-read-btn {
+  background: #0f766e;
+}
+
+.inside-read-btn:hover {
+  background: #115e59;
+}
+
+#reader {
+  margin-top: 25px;
+  padding: 22px;
+  background: #fff;
+  border: 2px solid #0f766e;
+  border-radius: 10px;
+}
+
+.reader-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #cbd5e1;
+  padding-bottom: 12px;
+}
+
+.reader-header h2 {
+  margin: 0;
+}
+
+#close-reader-btn {
+  background: #475569;
+}
+
+#close-reader-btn:hover {
+  background: #334155;
+}
+
+#reader-content {
+  max-height: 550px;
+  overflow-y: auto;
+  margin-top: 20px;
+  white-space: pre-wrap;
+  line-height: 1.8;
+  font-size: 18px;
+}
 .open-btn {
   background: #7c3aed;
 }

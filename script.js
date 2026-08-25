@@ -2,11 +2,16 @@ const bookForm = document.getElementById("book-form");
 const bookTitle = document.getElementById("book-title");
 const bookAuthor = document.getElementById("book-author");
 const bookLink = document.getElementById("book-link");
+const bookContent = document.getElementById("book-content");
 const bookList = document.getElementById("book-list");
 const searchBook = document.getElementById("search-book");
 const bookFilter = document.getElementById("book-filter");
 const bookStats = document.getElementById("book-stats");
 const clearBooksButton = document.getElementById("clear-books-btn");
+const reader = document.getElementById("reader");
+const readerTitle = document.getElementById("reader-title");
+const readerContent = document.getElementById("reader-content");
+const closeReaderButton = document.getElementById("close-reader-btn");
 
 let books = JSON.parse(localStorage.getItem("books")) || [];
 
@@ -51,7 +56,8 @@ function displayBooks() {
         <p>by ${book.author}</p>
       </div>
       <div class="book-actions">
-      <button class="find-btn">Find Book</button>
+        <button class="find-btn">Find Book</button>
+        ${book.content ? '<button class="inside-read-btn">Read Inside App</button>' : ""}
         ${book.link ? '<button class="open-btn">Read Book</button>' : ""}
         <button class="read-btn">${book.read ? "Read" : "Mark as Read"}</button>
         <button class="edit-btn">Edit</button>
@@ -59,13 +65,23 @@ function displayBooks() {
       </div>
     `;
 
-    const openButton = bookElement.querySelector(".open-btn");
-    const findButton = bookElement.querySelector(".find-btn");
+    bookElement.querySelector(".find-btn").addEventListener("click", function () {
+      const search = encodeURIComponent(book.title + " " + book.author);
+      window.open("https://books.google.com/books?q=" + search, "_blank");
+    });
 
-findButton.addEventListener("click", function () {
-  const search = encodeURIComponent(book.title + " " + book.author);
-  window.open("https://books.google.com/books?q=" + search, "_blank");
-});
+    const insideReadButton = bookElement.querySelector(".inside-read-btn");
+
+    if (insideReadButton) {
+      insideReadButton.addEventListener("click", function () {
+        readerTitle.textContent = book.title + " — " + book.author;
+        readerContent.textContent = book.content;
+        reader.hidden = false;
+        reader.scrollIntoView({ behavior: "smooth" });
+      });
+    }
+
+    const openButton = bookElement.querySelector(".open-btn");
 
     if (openButton) {
       openButton.addEventListener("click", function () {
@@ -110,6 +126,7 @@ bookForm.addEventListener("submit", function (event) {
     title: bookTitle.value,
     author: bookAuthor.value,
     link: bookLink.value,
+    content: bookContent.value,
     read: false
   });
 
@@ -119,6 +136,7 @@ bookForm.addEventListener("submit", function (event) {
   bookTitle.value = "";
   bookAuthor.value = "";
   bookLink.value = "";
+  bookContent.value = "";
   bookTitle.focus();
 });
 
@@ -131,6 +149,10 @@ clearBooksButton.addEventListener("click", function () {
     saveBooks();
     displayBooks();
   }
+});
+
+closeReaderButton.addEventListener("click", function () {
+  reader.hidden = true;
 });
 
 displayBooks();

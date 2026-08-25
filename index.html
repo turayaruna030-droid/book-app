@@ -29,6 +29,10 @@
   type="url"
   placeholder="Book reading link (optional)"
 />
+<textarea
+  id="book-content"
+  placeholder="Paste legal book text here to read it inside the app"
+></textarea>
 
       <button type="submit">Add Book</button>
     </form>
@@ -45,6 +49,14 @@
 <p id="book-stats"></p>
 <button id="clear-books-btn">Clear All Books</button>
     <section id="book-list"></section>
+    <section id="reader" hidden>
+  <div class="reader-header">
+    <h2 id="reader-title">Book Reader</h2>
+    <button id="close-reader-btn" type="button">Close Reader</button>
+  </div>
+
+  <article id="reader-content"></article>
+</section>
   </main>
 
   <script src="script.js"></script>

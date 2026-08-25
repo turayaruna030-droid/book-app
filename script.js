@@ -3,6 +3,7 @@ const bookTitle = document.getElementById("book-title");
 const bookAuthor = document.getElementById("book-author");
 const bookLink = document.getElementById("book-link");
 const bookContent = document.getElementById("book-content");
+const bookFile = document.getElementById("book-file");
 const bookList = document.getElementById("book-list");
 const searchBook = document.getElementById("search-book");
 const bookFilter = document.getElementById("book-filter");
@@ -18,7 +19,21 @@ let books = JSON.parse(localStorage.getItem("books")) || [];
 function saveBooks() {
   localStorage.setItem("books", JSON.stringify(books));
 }
+bookFile.addEventListener("change", function () {
+  const selectedFile = bookFile.files[0];
 
+  if (!selectedFile) {
+    return;
+  }
+
+  const fileReader = new FileReader();
+
+  fileReader.addEventListener("load", function () {
+    bookContent.value = fileReader.result;
+  });
+
+  fileReader.readAsText(selectedFile);
+});
 function displayBooks() {
   bookList.innerHTML = "";
 
@@ -137,6 +152,7 @@ bookForm.addEventListener("submit", function (event) {
   bookAuthor.value = "";
   bookLink.value = "";
   bookContent.value = "";
+  bookFile.value = "";
   bookTitle.focus();
 });
 

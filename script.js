@@ -1,6 +1,7 @@
 const bookForm = document.getElementById("book-form");
 const bookTitle = document.getElementById("book-title");
 const bookAuthor = document.getElementById("book-author");
+const bookLink = document.getElementById("book-link");
 const bookList = document.getElementById("book-list");
 const searchBook = document.getElementById("search-book");
 const bookFilter = document.getElementById("book-filter");
@@ -50,11 +51,20 @@ function displayBooks() {
         <p>by ${book.author}</p>
       </div>
       <div class="book-actions">
+        ${book.link ? '<button class="open-btn">Read Book</button>' : ""}
         <button class="read-btn">${book.read ? "Read" : "Mark as Read"}</button>
         <button class="edit-btn">Edit</button>
         <button class="delete-btn">Delete</button>
       </div>
     `;
+
+    const openButton = bookElement.querySelector(".open-btn");
+
+    if (openButton) {
+      openButton.addEventListener("click", function () {
+        window.open(book.link, "_blank");
+      });
+    }
 
     bookElement.querySelector(".read-btn").addEventListener("click", function () {
       books[index].read = !books[index].read;
@@ -65,10 +75,12 @@ function displayBooks() {
     bookElement.querySelector(".edit-btn").addEventListener("click", function () {
       const newTitle = prompt("Enter the new book title:", book.title);
       const newAuthor = prompt("Enter the new author name:", book.author);
+      const newLink = prompt("Enter the book reading link:", book.link || "");
 
       if (newTitle && newAuthor) {
         books[index].title = newTitle;
         books[index].author = newAuthor;
+        books[index].link = newLink || "";
         saveBooks();
         displayBooks();
       }
@@ -90,6 +102,7 @@ bookForm.addEventListener("submit", function (event) {
   books.push({
     title: bookTitle.value,
     author: bookAuthor.value,
+    link: bookLink.value,
     read: false
   });
 
@@ -98,6 +111,8 @@ bookForm.addEventListener("submit", function (event) {
 
   bookTitle.value = "";
   bookAuthor.value = "";
+  bookLink.value = "";
+  bookTitle.focus();
 });
 
 searchBook.addEventListener("input", displayBooks);

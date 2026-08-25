@@ -51,6 +51,7 @@ function displayBooks() {
         <p>by ${book.author}</p>
       </div>
       <div class="book-actions">
+      <button class="find-btn">Find Book</button>
         ${book.link ? '<button class="open-btn">Read Book</button>' : ""}
         <button class="read-btn">${book.read ? "Read" : "Mark as Read"}</button>
         <button class="edit-btn">Edit</button>
@@ -59,6 +60,12 @@ function displayBooks() {
     `;
 
     const openButton = bookElement.querySelector(".open-btn");
+    const findButton = bookElement.querySelector(".find-btn");
+
+findButton.addEventListener("click", function () {
+  const search = encodeURIComponent(book.title + " " + book.author);
+  window.open("https://books.google.com/books?q=" + search, "_blank");
+});
 
     if (openButton) {
       openButton.addEventListener("click", function () {
